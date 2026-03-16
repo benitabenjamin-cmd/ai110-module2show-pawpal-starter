@@ -49,8 +49,9 @@ I prioritized time and priority because the owner’s availability is the hard l
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
-Tradeoff: The scheduler checks conflicts only for tasks with the exact same start time, rather than detecting overlapping durations.
+The scheduler checks conflicts only for tasks with the exact same start time, rather than detecting overlapping durations.
 This simplifies the algorithm and covers most common cases while keeping the system fast and understandable. More complex overlap detection could be added in future iterations.
+
 ---
 
 ## 3. AI Collaboration
@@ -73,6 +74,7 @@ Used prompts like "use this description and make a UML design" and "check this f
 
 Copilot suggested storing scheduling logic inside the Owner class. I rejected this and kept all scheduling inside the Scheduler class for cleaner separation of responsibilities.
 I reviewed the design and verified that keeping the Owner class focused on data management, while the Scheduler handles task planning, made the system more modular and maintainable.
+
 ---
 
 ## 4. Testing and Verification
