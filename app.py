@@ -40,10 +40,9 @@ At minimum, your system should:
 st.divider()
 
 # ---------------------------
-# Quick Demo Inputs
+# Owner & Pet Info
 # ---------------------------
 st.subheader("Owner & Pet Info")
-
 owner_name = st.text_input("Owner name", value="Jordan")
 pet_name = st.text_input("Pet name", value="Mochi")
 species = st.selectbox("Species", ["dog", "cat", "other"])
@@ -72,7 +71,6 @@ st.divider()
 # Add Tasks
 # ---------------------------
 st.subheader("Add Tasks")
-
 if st.session_state.owner.pets:
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -91,7 +89,8 @@ if st.session_state.owner.pets:
             name=task_title,
             duration=int(duration),
             priority={"low": 3, "medium": 6, "high": 10}[priority],
-            category="General"
+            category="General",
+            completed=False
         )
         # Add task to the selected pet
         pet = next(p for p in st.session_state.owner.pets if p.name == selected_pet_name)
@@ -118,12 +117,29 @@ st.subheader("Build Today's Schedule")
 
 if st.button("Generate Schedule"):
     scheduler = Scheduler(st.session_state.owner)
+    scheduler.sort_tasks_by_priority()
     daily_plan = scheduler.generate_daily_plan()
+    conflicts = scheduler.detect_conflicts()
+
+    # Display conflicts first
+    if conflicts:
+        for warning in conflicts:
+            st.warning(warning)
 
     if daily_plan:
         st.markdown(f"### Today's Schedule for {st.session_state.owner.name}")
+        schedule_table = []
         for i, task in enumerate(daily_plan, start=1):
             pet_name = next(p.name for p in st.session_state.owner.pets if task in p.tasks)
-            st.write(f"{i}. {task.get_task_details()} (Pet: {pet_name})")
+            schedule_table.append({
+                "No.": i,
+                "Task": task.name,
+                "Pet": pet_name,
+                "Category": task.category,
+                "Duration (min)": task.duration,
+                "Priority": task.priority,
+                "Status": "Complete" if task.completed else "Pending"
+            })
+        st.table(schedule_table)
     else:
         st.info("No tasks to schedule or time exceeded available time.")

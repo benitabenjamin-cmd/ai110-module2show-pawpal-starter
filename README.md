@@ -50,12 +50,34 @@ pip install -r requirements.txt
 - Automatically handle recurring tasks (daily/weekly)
 
 
+## Features
+- Add and manage multiple pets
+- Add and manage tasks with priority, duration, and category
+- Sort tasks by priority and time
+- Filter tasks by pet or completion status
+- Detect conflicts and display warnings
+- Automatically handle recurring tasks (daily/weekly)
+
+
 ## Testing PawPal+
 
 We wrote automated tests to ensure the PawPal+ system behaves correctly.
 
 **How to run tests:**
-```bash
+
 python3 -m pytest
 
+
 Confidence Level: ⭐⭐⭐⭐⭐ (5/5) — All core behaviors, including sorting, recurring tasks, and conflict detection, passed automated tests.
+
+## Running the App
+
+To launch the Streamlit interface:
+streamlit run app.py
+
+
+## 📸 Demo
+<a href="/course_images/ai110/your_screenshot_name.png" target="_blank">
+    <img src="images/Adding.png" alt="Adding tasks to PawPal" width="600"/>
+    <img src="images/generate.png" alt="Generated schedule in PawPal" width="600"/>
+</a>
